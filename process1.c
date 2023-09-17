@@ -15,7 +15,7 @@ int main(){
     sched_setscheduler(0, SCHED_OTHER, &param1);
 
     if(pid1 ==0){
-        execl("./counting_program.c", "counting_program", NULL);
+        execl("./counting_program.c", "counting_program.c", NULL);
         perror("execl");
         exit(EXIT_FAILURE);
     } else if(pid1 <0){
