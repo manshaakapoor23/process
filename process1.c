@@ -8,21 +8,21 @@
 int main(){
     struct timespec start;
     struct timespec end;
-    clocl_gettime(CLOCK_MONOTONIC, &start);
-    pid parent_pid = fork();
+    clock_gettime(CLOCK_MONOTONIC, &start);
+    pid pid1 = fork();
     struct sched_param param1;
     param1.sched_priority = 0;
     sched_setscheduler(0, SCHED_OTHER, &param1);
 
-    if(parent_pid ==0){
+    if(pid1 ==0){
         execl("./counting_program", "counting_program", NULL);
         perror("execl");
         exit(EXIT_FAILURE);
-    } else if(pid <0){
+    } else if(pid1 <0){
         perror("ERROR IN FORK!!!");
         exit(EXIT_FAILURE);
     }
-    waitpid(parent_pid, NULL, 0);
+    waitpid(pid1, NULL, 0);
     clock_gettime(CLOCK_MONOTONIC, &end);
 
     double execution_time = (double)(end.tv_sec - start.tv_sec) + (double)(end.tv_nsec - start.tv_nsec) / 1e9;
